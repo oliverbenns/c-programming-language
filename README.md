@@ -1,4 +1,4 @@
-# c-programming-language
+# C Programming Language
 
 ![The C Programming Language Book](./image.png)
 
