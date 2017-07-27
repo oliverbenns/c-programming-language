@@ -29,9 +29,6 @@ void getInput(char body[]) {
     body[i] = '\0';
 }
 
-// This doesn't consider new input width.
-// E.g. MAX_INPUT_WIDTH + (tabCount * TAB_WIDTH).
-// Will learn about dynamic memory allocation later.
 void entab(char body[]) {
     char output[MAX_INPUT_WIDTH];
     int c, j, lineStarted;
@@ -42,20 +39,18 @@ void entab(char body[]) {
         if (c == ' ' && !lineStarted) {
             int tabStopIndex;
             
-            for (tabStopIndex = 0; c == ' ' && tabStopIndex < TAB_WIDTH - 1; tabStopIndex++) {
-                c = body[i + tabStopIndex];
-            }
+            for (tabStopIndex = 0; body[i + tabStopIndex] == ' ' && tabStopIndex < TAB_WIDTH - 1; tabStopIndex++);
             
-            output[j] = '#';
-            i += tabStopIndex;
-            ++j;
+            output[j] = '\t';
+            i += tabStopIndex - 1; // Because the outer 'for' adds one anyway.
             
         } else {
             output[j] = c;
-            ++j;
-            lineStarted = c != '\n';
+            lineStarted = c != '\n' && (!lineStarted && c != '\t'); // fix this.
         }
         
+        ++j;
+
     }
     
     // Assign values back to original array.
