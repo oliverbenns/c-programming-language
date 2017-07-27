@@ -10,7 +10,8 @@ int main() {
     char output[MAX_INPUT_WIDTH];
 
     getInput(output);
-    detab(output); // SIGABRT err when tab used
+    
+    detab(output);
     
     printf("This is the output: %s\n", output);
     
@@ -33,11 +34,10 @@ void getInput(char body[]) {
 // Will learn about dynamic memory allocation later.
 void detab(char body[]) {
     char output[MAX_INPUT_WIDTH];
+    int c;
     int j = 0;
     
-    for(int i = 0; i < MAX_INPUT_WIDTH - 1; ++i) {
-        char c = body[i];
-        
+    for(int i = 0; (c = body[i]) != '\0'; ++i) {
         if (c == '\t') {
             for (int k = 0; k < TAB_WIDTH; ++k) {
                 output[j] = ' ';
