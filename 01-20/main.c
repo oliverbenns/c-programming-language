@@ -13,7 +13,7 @@ int main() {
     
     detab(output);
     
-    printf("This is the output: %s\n", output);
+    printf("\nThis is the output: \n%s\n", output);
     
     return 0;
 }
@@ -21,7 +21,7 @@ int main() {
 void getInput(char body[]) {
     int c, i;
     
-    for (i = 0; i < MAX_INPUT_WIDTH - 1 && (c = getchar()) != EOF && c != '\n'; ++i) {
+    for (i = 0; i < MAX_INPUT_WIDTH - 1 && (c = getchar()) != EOF; ++i) {
         body[i] = c;
     }
     
@@ -34,11 +34,12 @@ void getInput(char body[]) {
 // Will learn about dynamic memory allocation later.
 void detab(char body[]) {
     char output[MAX_INPUT_WIDTH];
-    int c;
-    int j = 0;
+    int c, j, lineStarted;
+    j = lineStarted = 0;
     
     for(int i = 0; (c = body[i]) != '\0'; ++i) {
-        if (c == '\t') {
+
+        if (c == '\t' && !lineStarted) {
             for (int k = 0; k < TAB_WIDTH; ++k) {
                 output[j] = ' ';
                 ++j;
@@ -46,7 +47,9 @@ void detab(char body[]) {
         } else {
             output[j] = c;
             ++j;
+            lineStarted = c != '\n';
         }
+        
     }
     
     // Assign values back to original array.
